@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.User">
+    <id column="xh" jdbcType="VARCHAR" property="xh" />
+    <result column="nc" jdbcType="VARCHAR" property="nc" />
+    <result column="mm" jdbcType="VARCHAR" property="mm" />
+    <result column="UUID" jdbcType="VARCHAR" property="uuid" />
+    <result column="gxqm" jdbcType="VARCHAR" property="gxqm" />
+    <result column="sr" jdbcType="VARCHAR" property="sr" />
+    <result column="txlj" jdbcType="VARCHAR" property="txlj" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    xh, nc, mm, UUID, gxqm, sr, txlj
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_user
+    where xh = #{xh,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUUID" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from table_user
+    where UUID = #{uuid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from table_user
+    where xh = #{xh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.User">
+    insert into table_user (xh, nc, mm, UUID, 
+      gxqm, sr, txlj)
+    values (#{xh,jdbcType=VARCHAR}, #{nc,jdbcType=VARCHAR}, #{mm,jdbcType=VARCHAR}, #{uuid,jdbcType=VARCHAR}, 
+      #{gxqm,jdbcType=VARCHAR}, #{sr,jdbcType=VARCHAR}, #{txlj,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.User">
+    insert into table_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        xh,
+      </if>
+      <if test="nc != null">
+        nc,
+      </if>
+      <if test="mm != null">
+        mm,
+      </if>
+      <if test="uuid != null">
+        UUID,
+      </if>
+      <if test="gxqm != null">
+        gxqm,
+      </if>
+      <if test="sr != null">
+        sr,
+      </if>
+      <if test="txlj != null">
+        txlj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="nc != null">
+        #{nc,jdbcType=VARCHAR},
+      </if>
+      <if test="mm != null">
+        #{mm,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="gxqm != null">
+        #{gxqm,jdbcType=VARCHAR},
+      </if>
+      <if test="sr != null">
+        #{sr,jdbcType=VARCHAR},
+      </if>
+      <if test="txlj != null">
+        #{txlj,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.User">
+    update table_user
+    <set>
+      <if test="nc != null">
+        nc = #{nc,jdbcType=VARCHAR},
+      </if>
+      <if test="mm != null">
+        mm = #{mm,jdbcType=VARCHAR},
+      </if>
+      <if test="uuid != null">
+        UUID = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="gxqm != null">
+        gxqm = #{gxqm,jdbcType=VARCHAR},
+      </if>
+      <if test="sr != null">
+        sr = #{sr,jdbcType=VARCHAR},
+      </if>
+      <if test="txlj != null">
+        txlj = #{txlj,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where xh = #{xh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.User">
+    update table_user
+    set nc = #{nc,jdbcType=VARCHAR},
+      mm = #{mm,jdbcType=VARCHAR},
+      UUID = #{uuid,jdbcType=VARCHAR},
+      gxqm = #{gxqm,jdbcType=VARCHAR},
+      sr = #{sr,jdbcType=VARCHAR},
+      txlj = #{txlj,jdbcType=VARCHAR}
+    where xh = #{xh,jdbcType=VARCHAR}
+  </update>
+</mapper>

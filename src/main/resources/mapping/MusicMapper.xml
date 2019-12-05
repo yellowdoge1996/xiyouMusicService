@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.MusicMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.Music">
+    <id column="gqid" jdbcType="BIGINT" property="gqid" />
+    <result column="zzxh" jdbcType="VARCHAR" property="zzxh" />
+    <result column="gqmc" jdbcType="VARCHAR" property="gqmc" />
+    <result column="gqlj" jdbcType="VARCHAR" property="gqlj" />
+    <result column="gqct" jdbcType="VARCHAR" property="gqct" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    gqid, zzxh, gqmc, gqlj, gqct
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_music
+    where gqid = #{gqid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from table_music
+    where gqid = #{gqid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.Music">
+    insert into table_music (gqid, zzxh, gqmc, 
+      gqlj, gqct)
+    values (#{gqid,jdbcType=BIGINT}, #{zzxh,jdbcType=VARCHAR}, #{gqmc,jdbcType=VARCHAR}, 
+      #{gqlj,jdbcType=VARCHAR}, #{gqct,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.Music">
+    insert into table_music
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="gqid != null">
+        gqid,
+      </if>
+      <if test="zzxh != null">
+        zzxh,
+      </if>
+      <if test="gqmc != null">
+        gqmc,
+      </if>
+      <if test="gqlj != null">
+        gqlj,
+      </if>
+      <if test="gqct != null">
+        gqct,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="gqid != null">
+        #{gqid,jdbcType=BIGINT},
+      </if>
+      <if test="zzxh != null">
+        #{zzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqmc != null">
+        #{gqmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gqlj != null">
+        #{gqlj,jdbcType=VARCHAR},
+      </if>
+      <if test="gqct != null">
+        #{gqct,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.Music">
+    update table_music
+    <set>
+      <if test="zzxh != null">
+        zzxh = #{zzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqmc != null">
+        gqmc = #{gqmc,jdbcType=VARCHAR},
+      </if>
+      <if test="gqlj != null">
+        gqlj = #{gqlj,jdbcType=VARCHAR},
+      </if>
+      <if test="gqct != null">
+        gqct = #{gqct,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.Music">
+    update table_music
+    set zzxh = #{zzxh,jdbcType=VARCHAR},
+      gqmc = #{gqmc,jdbcType=VARCHAR},
+      gqlj = #{gqlj,jdbcType=VARCHAR},
+      gqct = #{gqct,jdbcType=VARCHAR}
+    where gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+</mapper>

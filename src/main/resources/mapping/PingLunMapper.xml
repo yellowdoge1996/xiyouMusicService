@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.PingLunMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.PingLun">
+    <id column="plid" jdbcType="BIGINT" property="plid" />
+    <result column="plnr" jdbcType="VARCHAR" property="plnr" />
+    <result column="plzxh" jdbcType="VARCHAR" property="plzxh" />
+    <result column="gqid" jdbcType="BIGINT" property="gqid" />
+    <result column="plznc" jdbcType="VARCHAR" property="plznc" />
+  </resultMap>
+
+  <resultMap type="com.yellowdoge.app.xiyoumusic.model.CommentBean" id="CommentBean">
+    <id column="plid" jdbcType="BIGINT" property="plid" />
+    <result column="plnr" jdbcType="VARCHAR" property="plnr" />
+    <result column="plzxh" jdbcType="VARCHAR" property="plzxh" />
+    <result column="gqid" jdbcType="BIGINT" property="gqid" />
+    <result column="plznc" jdbcType="VARCHAR" property="plznc" />
+    <result column="txlj" jdbcType="VARCHAR" property="txlj"/>
+    <result column="sr" jdbcType="VARCHAR" property="sr"/>
+    <result column="gxqm" jdbcType="VARCHAR" property="gxqm"/>
+    <!-- 这句特别重要，它的作用就是将selectGoodsForMarket取出的结果集映射到Markets这个Javabean中的goods属性 -->
+    <collection property="huiFuList" column="plid" ofType="com.yellowdoge.app.xiyoumusic.model.HuifuDetails" select="selectHuifuForPinglun"/>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    plid, plnr, plzxh, gqid, plznc
+  </sql>
+
+  <select id="selectHuifuForPinglun" resultType="com.yellowdoge.app.xiyoumusic.model.HuifuDetails">
+    SELECT
+      hfid, hfnr, plid, hfzxh, hfmbid, bhfzxh,
+      u.txlj as hfztxlj, u.nc as hfznc, u.sr as hfzsr,
+      u.gxqm as hfzgxqm, bu.txlj as bhfztxlj, bu.nc as bhfznc,
+      bu.sr as bhfzsr, bu.gxqm as bhfzgxqm
+    FROM
+      table_hf
+    join table_user bu on table_hf.bhfzxh = bu.xh
+    join table_user u on table_hf.hfzxh = u.xh
+    where plid=#{plid,jdbcType=BIGINT}
+    order by hfid desc
+  </select>
+  <select id="getComment" parameterType="java.lang.Long" resultMap="CommentBean">
+    select
+      plid, plnr, plzxh, gqid, plznc, txlj, sr, gxqm
+    from
+      table_pl
+    join
+      table_user u on table_pl.plzxh = u.xh
+    where
+      gqid = #{gqid,jdbcType=BIGINT}
+    order by plid desc
+  </select>
+
+    <select id="getCommentBean" parameterType="java.lang.Long" resultMap="CommentBean">
+    select
+      plid, plnr, plzxh, gqid, plznc, txlj, sr, gxqm
+    from
+      table_pl
+    join
+      table_user u on table_pl.plzxh = u.xh
+    where
+      plid = #{plid,jdbcType=BIGINT}
+    order by plid desc
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_pl
+    where plid = #{plid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from table_pl
+    where plid = #{plid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.PingLun">
+    insert into table_pl (plid, plnr, plzxh, 
+      gqid, plznc)
+    values (#{plid,jdbcType=BIGINT}, #{plnr,jdbcType=VARCHAR}, #{plzxh,jdbcType=VARCHAR}, 
+      #{gqid,jdbcType=BIGINT}, #{plznc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.PingLun">
+    insert into table_pl
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="plid != null">
+        plid,
+      </if>
+      <if test="plnr != null">
+        plnr,
+      </if>
+      <if test="plzxh != null">
+        plzxh,
+      </if>
+      <if test="gqid != null">
+        gqid,
+      </if>
+      <if test="plznc != null">
+        plznc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="plid != null">
+        #{plid,jdbcType=BIGINT},
+      </if>
+      <if test="plnr != null">
+        #{plnr,jdbcType=VARCHAR},
+      </if>
+      <if test="plzxh != null">
+        #{plzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqid != null">
+        #{gqid,jdbcType=BIGINT},
+      </if>
+      <if test="plznc != null">
+        #{plznc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.PingLun">
+    update table_pl
+    <set>
+      <if test="plnr != null">
+        plnr = #{plnr,jdbcType=VARCHAR},
+      </if>
+      <if test="plzxh != null">
+        plzxh = #{plzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqid != null">
+        gqid = #{gqid,jdbcType=BIGINT},
+      </if>
+      <if test="plznc != null">
+        plznc = #{plznc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where plid = #{plid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.PingLun">
+    update table_pl
+    set plnr = #{plnr,jdbcType=VARCHAR},
+      plzxh = #{plzxh,jdbcType=VARCHAR},
+      gqid = #{gqid,jdbcType=BIGINT},
+      plznc = #{plznc,jdbcType=VARCHAR}
+    where plid = #{plid,jdbcType=BIGINT}
+  </update>
+</mapper>

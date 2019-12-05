@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.DianZanMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.DianZan">
+    <id column="dzzxh" jdbcType="VARCHAR" property="dzzxh" />
+    <id column="gqid" jdbcType="BIGINT" property="gqid" />
+    <result column="dzsj" jdbcType="BIGINT" property="dzsj" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dzzxh, gqid, dzsj
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZanKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_dz
+    where dzzxh = #{dzzxh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZanKey">
+    delete from table_dz
+    where dzzxh = #{dzzxh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZan">
+    insert into table_dz (dzzxh, gqid, dzsj
+      )
+    values (#{dzzxh,jdbcType=VARCHAR}, #{gqid,jdbcType=BIGINT}, #{dzsj,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZan">
+    insert into table_dz
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dzzxh != null">
+        dzzxh,
+      </if>
+      <if test="gqid != null">
+        gqid,
+      </if>
+      <if test="dzsj != null">
+        dzsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dzzxh != null">
+        #{dzzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqid != null">
+        #{gqid,jdbcType=BIGINT},
+      </if>
+      <if test="dzsj != null">
+        #{dzsj,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZan">
+    update table_dz
+    <set>
+      <if test="dzsj != null">
+        dzsj = #{dzsj,jdbcType=BIGINT},
+      </if>
+    </set>
+    where dzzxh = #{dzzxh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.DianZan">
+    update table_dz
+    set dzsj = #{dzsj,jdbcType=BIGINT}
+    where dzzxh = #{dzzxh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.LiuYanMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.LiuYan">
+    <id column="lyid" jdbcType="BIGINT" property="lyid" />
+    <result column="lyzxh" jdbcType="VARCHAR" property="lyzxh" />
+    <result column="jszxh" jdbcType="VARCHAR" property="jszxh" />
+    <result column="lynr" jdbcType="VARCHAR" property="lynr" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lyid, lyzxh, jszxh, lynr
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_ly
+    where lyid = #{lyid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from table_ly
+    where lyid = #{lyid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.LiuYan">
+    insert into table_ly (lyid, lyzxh, jszxh, 
+      lynr)
+    values (#{lyid,jdbcType=BIGINT}, #{lyzxh,jdbcType=VARCHAR}, #{jszxh,jdbcType=VARCHAR}, 
+      #{lynr,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.LiuYan">
+    insert into table_ly
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lyid != null">
+        lyid,
+      </if>
+      <if test="lyzxh != null">
+        lyzxh,
+      </if>
+      <if test="jszxh != null">
+        jszxh,
+      </if>
+      <if test="lynr != null">
+        lynr,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lyid != null">
+        #{lyid,jdbcType=BIGINT},
+      </if>
+      <if test="lyzxh != null">
+        #{lyzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="jszxh != null">
+        #{jszxh,jdbcType=VARCHAR},
+      </if>
+      <if test="lynr != null">
+        #{lynr,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.LiuYan">
+    update table_ly
+    <set>
+      <if test="lyzxh != null">
+        lyzxh = #{lyzxh,jdbcType=VARCHAR},
+      </if>
+      <if test="jszxh != null">
+        jszxh = #{jszxh,jdbcType=VARCHAR},
+      </if>
+      <if test="lynr != null">
+        lynr = #{lynr,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lyid = #{lyid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.LiuYan">
+    update table_ly
+    set lyzxh = #{lyzxh,jdbcType=VARCHAR},
+      jszxh = #{jszxh,jdbcType=VARCHAR},
+      lynr = #{lynr,jdbcType=VARCHAR}
+    where lyid = #{lyid,jdbcType=BIGINT}
+  </update>
+</mapper>

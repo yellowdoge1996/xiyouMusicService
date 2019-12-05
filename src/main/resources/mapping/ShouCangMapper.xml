@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yellowdoge.app.xiyoumusic.mapper.ShouCangMapper">
+  <resultMap id="BaseResultMap" type="com.yellowdoge.app.xiyoumusic.model.ShouCang">
+    <id column="xh" jdbcType="VARCHAR" property="xh" />
+    <id column="gqid" jdbcType="BIGINT" property="gqid" />
+    <result column="scsj" jdbcType="BIGINT" property="scsj" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    xh, gqid, scsj
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCangKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from table_sc
+    where xh = #{xh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCangKey">
+    delete from table_sc
+    where xh = #{xh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCang">
+    insert into table_sc (xh, gqid, scsj)
+    values (#{xh,jdbcType=VARCHAR}, #{gqid,jdbcType=BIGINT}, #{scsj,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCang">
+    insert into table_sc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        xh,
+      </if>
+      <if test="gqid != null">
+        gqid,
+      </if>
+      <if test="scsj != null">
+        scsj,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="xh != null">
+        #{xh,jdbcType=VARCHAR},
+      </if>
+      <if test="gqid != null">
+        #{gqid,jdbcType=BIGINT},
+      </if>
+      <if test="scsj != null">
+        #{scsj,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCang">
+    update table_sc
+    <set>
+      <if test="scsj != null">
+        scsj = #{scsj,jdbcType=BIGINT},
+      </if>
+    </set>
+    where xh = #{xh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yellowdoge.app.xiyoumusic.model.ShouCang">
+    update table_sc
+    set scsj = #{scsj,jdbcType=BIGINT}
+    where xh = #{xh,jdbcType=VARCHAR}
+      and gqid = #{gqid,jdbcType=BIGINT}
+  </update>
+</mapper>
